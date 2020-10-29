@@ -58,7 +58,6 @@ def test_sample_evaluations_with_moving_average(sample_data):
 def test_evaluation_with_year(sample_data):
     sample_line = "year == 2019"
     result = evaluate_line(sample_data, sample_line)
-    print(result)
     assert isinstance(result, pd.Series)
     assert result.all()
 
