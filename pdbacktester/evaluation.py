@@ -21,8 +21,15 @@ def get_locals(df):
     return {**locals_dict, **functions_dict}
 
 
+def check_for_comparator(line):
+    comparators = [">", "<", ">=", "<=", "=="]
+    has_comparator = any([cmp in line for cmp in comparators])
+    if not has_comparator:
+        raise SyntaxError("Condition needs a comparator.")
+
+
 def evaluate_line(df, line):
-    # todo: assert line has a condition
+    check_for_comparator(line)
     locals_dict = get_locals(df)
     return eval(line, {'__builtins__': None}, locals_dict)
 
