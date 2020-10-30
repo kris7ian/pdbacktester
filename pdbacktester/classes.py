@@ -62,6 +62,18 @@ class SeriesContainer:
         else:
             return self.series == other
 
+    def __and__(self, other):
+        if isinstance(other, SeriesContainer):
+            return self.series & other.series
+        else:
+            return self.series & other
+
+    def __or__(self, other):
+        if isinstance(other, SeriesContainer):
+            return self.series | other.series
+        else:
+            return self.series | other
+
     def __getitem__(self, i):
         if not isinstance(i, int):
             raise ValueError(f"'{i}' is not an integer!")
