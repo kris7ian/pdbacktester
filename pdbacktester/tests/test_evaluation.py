@@ -62,6 +62,20 @@ def test_evaluation_with_year(sample_data):
     assert result.all()
 
 
+def test_evaluation_with_or(sample_data):
+    sample_line = "(year == 2019) | (year == 0)"
+    result = evaluate_line(sample_data, sample_line)
+    assert isinstance(result, pd.Series)
+    assert result.all()
+
+
+def test_evaluation_with_and(sample_data):
+    sample_line = "(year == 2019) & (year == 2019)"
+    result = evaluate_line(sample_data, sample_line)
+    assert isinstance(result, pd.Series)
+    assert result.all()
+
+
 def test_multiple_line_evaluation(sample_data):
     code_string = """
     open > close
