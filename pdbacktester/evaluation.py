@@ -14,6 +14,8 @@ def get_locals(df):
         month=SeriesContainer(functions.month(df)),
         year=SeriesContainer(functions.year(df)),
         day=SeriesContainer(functions.day(df)),
+        today=SeriesContainer(functions.today(df)),
+        gap=SeriesContainer(functions.gap(df)),
     )
 
     functions_dict = functions.FUNCTION_REGISTRY
