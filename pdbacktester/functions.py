@@ -33,7 +33,7 @@ def series_container(func):
             else:
                 modified_kwargs[key] = value
 
-        return SeriesContainer(func(*modified_args, **modified_kwargs))
+        return SeriesContainer(lambda: func(*modified_args, **modified_kwargs))
 
     FUNCTION_REGISTRY[func.__name__] = inner
 

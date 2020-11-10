@@ -10,12 +10,12 @@ def get_locals(df):
         high=SeriesContainer(df["high"]),
         low=SeriesContainer(df["low"]),
         close=SeriesContainer(df["close"]),
-        weekday=SeriesContainer(functions.weekday(df)),
-        month=SeriesContainer(functions.month(df)),
-        year=SeriesContainer(functions.year(df)),
-        day=SeriesContainer(functions.day(df)),
-        today=SeriesContainer(functions.today(df)),
-        gap=SeriesContainer(functions.gap(df)),
+        weekday=SeriesContainer(lambda: functions.weekday(df)),
+        month=SeriesContainer(lambda: functions.month(df)),
+        year=SeriesContainer(lambda: functions.year(df)),
+        day=SeriesContainer(lambda: functions.day(df)),
+        today=SeriesContainer(lambda: functions.today(df)),
+        gap=SeriesContainer(lambda: functions.gap(df)),
     )
 
     functions_dict = functions.FUNCTION_REGISTRY
