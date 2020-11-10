@@ -72,3 +72,11 @@ def year(df):
 
 def day(df):
     return df["datetime"].dt.day
+
+
+def today(df):
+    return df["datetime"]
+
+
+def gap(df):
+    return df["open"] / df["close"].shift(1) - 1
