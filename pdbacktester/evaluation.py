@@ -2,6 +2,7 @@ import pandas as pd
 
 from pdbacktester.classes import SeriesContainer
 from pdbacktester import functions
+from pdbacktester.errors import EvaluationError
 
 
 def get_locals(df):
@@ -44,8 +45,7 @@ def get_signals(df, code_string):
             condition = evaluate_line(df, line)
         except Exception as e:
             # Examples: SyntaxError
-            print(f"There was an error on line: {line}")
-            raise
+            raise EvaluationError(f"There was an error on line {i}: {line}")
         conditions.append(condition)
 
     conditions = pd.concat(conditions, axis=1)
