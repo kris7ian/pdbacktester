@@ -13,7 +13,6 @@ def sample_series():
 
 @pytest.fixture
 def sample_decorated_function():
-
     @series_container
     def do_something(column):
         if not isinstance(column, pd.Series):

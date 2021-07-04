@@ -3,7 +3,7 @@ from pdbacktester import functions
 function_map = {
     "average": functions.moving_average,
     "highest": functions.highest,
-    "lowest": functions.lowest
+    "lowest": functions.lowest,
 }
 
 keyword_map = {
@@ -16,5 +16,5 @@ keyword_map = {
     "low_pct": "low_pct",
     "gap_pct": "gap_pct",
     "weekday": functions.weekday,
-    "month": functions.month
+    "month": functions.month,
 }

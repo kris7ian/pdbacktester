@@ -34,7 +34,7 @@ def check_for_comparator(line):
 def evaluate_line(df, line):
     check_for_comparator(line)
     locals_dict = get_locals(df)
-    return eval(line, {'__builtins__': None}, locals_dict)
+    return eval(line, {"__builtins__": None}, locals_dict)
 
 
 def get_signals(df, code_string):

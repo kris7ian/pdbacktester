@@ -1,3 +1,5 @@
+import pathlib
+
 import pandas as pd
 import pytest
 
@@ -8,7 +10,7 @@ from pdbacktester.evaluation import get_signals
 @pytest.fixture()
 def sample_data():
     df = pd.read_csv(
-        "/Users/kristian/Development/python/pd-backtester/pdbacktester/tests/testing.csv",
+        f"{pathlib.Path(__file__).parent.resolve()}/testing.csv"
     )
     df = df.tail(100)
     df["datetime"] = pd.to_datetime(df["datetime"])
