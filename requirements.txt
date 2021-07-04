@@ -1,0 +1,7 @@
+numpy==1.21.0
+pandas==1.2.5
+pandera==0.6.4
+pre-commit==2.13.0
+py==1.10.0
+pyparsing==2.4.7
+pytest==6.2.4
