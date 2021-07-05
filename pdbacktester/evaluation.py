@@ -1,7 +1,7 @@
 import pandas as pd
 
-from pdbacktester.classes import SeriesContainer
 from pdbacktester import functions
+from pdbacktester.classes import SeriesContainer
 from pdbacktester.errors import EvaluationError
 
 

@@ -1,8 +1,10 @@
+import numpy as np
 import pandas as pd
 
 from pdbacktester.backtest_result import BacktestResult
 from pdbacktester.errors import EvaluationError
-from pdbacktester.evaluation import check_for_comparator, get_locals
+from pdbacktester.evaluation import check_for_comparator
+from pdbacktester.evaluation import get_locals
 
 
 class Backtester:
@@ -37,6 +39,8 @@ class Backtester:
 
         conditions = pd.concat(conditions, axis=1)
         signals = conditions.all(axis=1)
+        signals[~signals] = np.nan
+        self.signals = signals
         return signals
 
     def get_random_signals(self, n):
@@ -47,6 +51,16 @@ class Backtester:
         locals_dict = get_locals(self.df)
         return eval(line, {"__builtins__": None}, locals_dict)
 
-    def calculate_return(self):
-        previous_close = self.df["close"].shift(-1)
-        return previous_close / self.df["close"]
+    def calculate_market_return(self):
+        previous_close = self.df["close"].shift(1)
+        self.market_returns = (self.df["close"] / previous_close) - 1
+        return self.market_returns
+
+    def calculate_strategy_return(self, holding_period):
+        if holding_period == 1:
+            # don't forward fill signals
+            positions = self.signals
+        else:
+            positions = self.signals.fillna(method="ffill", limit=holding_period)
+        returns = self.market_returns.shift(-1) * positions
+        return returns.fillna(0)
