@@ -23,7 +23,7 @@ class Backtester:
         self.signals = self.get_signals()
         self.market_returns = self.calculate_market_return()
         self.strategy_returns = self.calculate_strategy_return(holding_period)
-        self.result = BacktestResult(self.signals, self.returns)
+        self.result = BacktestResult(self.signals, self.market_returns)
         return self.result
 
     def get_signals(self):

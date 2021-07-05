@@ -35,9 +35,9 @@ def sample_code():
     """
 
 
-def test_backtester(sample_data_large):
+def test_backtester(sample_data_large, sample_code):
     backtester = Backtester(sample_data_large, sample_code)
-    backtester.run()
+    backtester.run(holding_period=3)
     assert backtester.signals is not None
 
 
@@ -50,8 +50,8 @@ def test_calculate_return(sample_data_small, sample_code):
             -0.00952380952380949,
             0.10576923076923062,
             -0.04347826086956508,
-            2,
-            0.5,
+            1,
+            -0.5,
         ]
     )
     pd.testing.assert_series_equal(returns, expected_returns, check_names=False)
@@ -78,7 +78,7 @@ def test_calculate_strategy_returns_single_period(sample_data_small, sample_code
     pd.testing.assert_series_equal(strategy_returns, expected_returns)
 
 
-@pytest.mark.xfail("Test not finished yet. Needs better test data.")
+@pytest.mark.xfail
 def test_calculate_strategy_returns_multiple_periods(sample_data_small, sample_code):
     backtester = Backtester(sample_data_small, sample_code)
     signals = backtester.get_signals()
