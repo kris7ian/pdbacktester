@@ -1,5 +1,6 @@
 import pandas as pd
 
+import pdbacktester.constants
 from pdbacktester import functions
 from pdbacktester.classes import SeriesContainer
 from pdbacktester.errors import EvaluationError
@@ -11,12 +12,12 @@ def get_locals(df):
         high=SeriesContainer(df["high"]),
         low=SeriesContainer(df["low"]),
         close=SeriesContainer(df["close"]),
-        weekday=SeriesContainer(lambda: functions.weekday(df)),
-        month=SeriesContainer(lambda: functions.month(df)),
-        year=SeriesContainer(lambda: functions.year(df)),
-        day=SeriesContainer(lambda: functions.day(df)),
-        today=SeriesContainer(lambda: functions.today(df)),
-        gap=SeriesContainer(lambda: functions.gap(df)),
+        weekday=SeriesContainer(lambda: pdbacktester.constants.weekday(df)),
+        month=SeriesContainer(lambda: pdbacktester.constants.month(df)),
+        year=SeriesContainer(lambda: pdbacktester.constants.year(df)),
+        day=SeriesContainer(lambda: pdbacktester.constants.day(df)),
+        today=SeriesContainer(lambda: pdbacktester.constants.today(df)),
+        gap=SeriesContainer(lambda: pdbacktester.constants.gap(df)),
     )
 
     functions_dict = functions.FUNCTION_REGISTRY
