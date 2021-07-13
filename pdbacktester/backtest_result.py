@@ -6,4 +6,3 @@ class BacktestResult:
     @property
     def trades(self):
         pass
-
