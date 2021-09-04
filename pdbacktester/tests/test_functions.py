@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from pdbacktester.classes import SeriesContainer
+from pdbacktester.series_container import SeriesContainer
 from pdbacktester.functions import FUNCTION_REGISTRY
 from pdbacktester.functions import series_container
 
