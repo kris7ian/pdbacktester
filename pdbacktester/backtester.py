@@ -3,7 +3,7 @@ import pandas as pd
 
 from pdbacktester.backtest_result import BacktestResult
 from pdbacktester.errors import EvaluationError
-from pdbacktester.evaluation import check_for_comparator
+from pdbacktester.evaluation import assert_has_comparator
 from pdbacktester.evaluation import get_locals
 
 
@@ -50,7 +50,7 @@ class Backtester:
         pass
 
     def evaluate_code_line(self, line):
-        check_for_comparator(line)
+        assert_has_comparator(line)
         locals_dict = get_locals(self.df)
         return eval(line, {"__builtins__": None}, locals_dict)
 
