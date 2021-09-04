@@ -20,25 +20,32 @@ def get_variables(df: pd.DataFrame) -> dict:
         gap=SeriesContainer(lambda: pdbacktester.constants.gap(df)),
     )
 
+
+def get_locals(df: pd.DataFrame):
+    """
+    Collects all variables that should be available at runtime
+    for the `eval` call in `evaluate_line`.
+    """
+    variables = get_variables(df)
     functions_dict = functions.FUNCTION_REGISTRY
 
-    return {**locals_dict, **functions_dict}
+    return {**variables, **functions_dict}
 
 
-def assert_has_comparator(line):
+def assert_has_comparator(line: str):
     comparators = [">", "<", ">=", "<=", "=="]
     has_comparator = any([cmp in line for cmp in comparators])
     if not has_comparator:
         raise SyntaxError("Condition needs a comparator.")
 
 
-def evaluate_line(df, line):
+def evaluate_line(df: pd.DataFrame, line: str):
     assert_has_comparator(line)
     locals_dict = get_locals(df)
     return eval(line, {"__builtins__": None}, locals_dict)
 
 
-def get_signals(df, code_string):
+def get_signals(df: pd.DataFrame, code_string: str):
     conditions = []
     lines = [s.strip() for s in code_string.strip().splitlines()]
     for i, line in enumerate(lines):
