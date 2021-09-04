@@ -14,6 +14,7 @@ class Backtester:
 
         self.df = df.copy()
         self.code = code
+        self.conditions = None
         self.signals = None
         self.market_returns = None
         self.strategy_returns = None
@@ -26,7 +27,7 @@ class Backtester:
         self.result = BacktestResult(self.signals, self.market_returns)
         return self.result
 
-    def get_signals(self):
+    def convert_code_to_conditions(self):
         conditions = []
         lines = [s.strip() for s in self.code.strip().splitlines()]
         for i, line in enumerate(lines):
@@ -36,9 +37,11 @@ class Backtester:
                 # Examples: SyntaxError
                 raise EvaluationError(f"There was an error on line {i}: {line}")
             conditions.append(condition)
+        return pd.concat(conditions, axis=1)
 
-        conditions = pd.concat(conditions, axis=1)
-        signals = conditions.all(axis=1)
+    def get_signals(self):
+        self.conditions = self.convert_code_to_conditions()
+        signals = self.conditions.all(axis=1)
         signals[~signals] = np.nan
         self.signals = signals
         return signals
