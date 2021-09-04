@@ -10,7 +10,7 @@ Installation
     $ pip install pdbacktester
 
 
-Usage
+Quick Usage
 -----
 ```python
 import pandas as pd
@@ -23,7 +23,7 @@ df = pd.read_csv("/path/to/your/data.csv")
 # Set up conditions
 code = """
 close < moving_average(close, 8)
-close > open 
+close > open
 """
 
 # Run backtest
