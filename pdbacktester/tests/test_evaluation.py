@@ -84,3 +84,13 @@ def test_multiple_line_evaluation(sample_data):
     """
     signals = get_signals(sample_data, code_string)
     assert isinstance(signals, pd.Series)
+
+
+def test_multiple_line_evaluation(sample_data):
+    code_string = """
+    open > close
+    high * 0 == 0
+    atr(5) > 1.0
+    """
+    signals = get_signals(sample_data, code_string)
+    assert isinstance(signals, pd.Series)

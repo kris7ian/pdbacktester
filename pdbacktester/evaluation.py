@@ -1,9 +1,10 @@
 import pandas as pd
 
 import pdbacktester.constants
-from pdbacktester import functions
-from pdbacktester.series_container import SeriesContainer
 from pdbacktester.errors import EvaluationError
+from pdbacktester.function_registry import FUNCTION_REGISTRY
+from pdbacktester.function_registry import FUNCTION_REGISTRY_WITH_INJECTIONS
+from pdbacktester.series_container import SeriesContainer
 
 
 def get_variables(df: pd.DataFrame) -> dict:
@@ -21,13 +22,26 @@ def get_variables(df: pd.DataFrame) -> dict:
     )
 
 
+def get_functions(df: pd.DataFrame) -> dict:
+    functions_dict = {}
+    for key, value in FUNCTION_REGISTRY.items():
+        functions_dict[key] = lambda *args, value=value, **kwargs: value(
+            *args, **kwargs
+        )
+    for key, value in FUNCTION_REGISTRY_WITH_INJECTIONS.items():
+        functions_dict[key] = lambda *args, value=value, **kwargs: value(
+            df, *args, **kwargs
+        )
+    return functions_dict
+
+
 def get_locals(df: pd.DataFrame):
     """
     Collects all variables that should be available at runtime
     for the `eval` call in `evaluate_line`.
     """
     variables = get_variables(df)
-    functions_dict = functions.FUNCTION_REGISTRY
+    functions_dict = get_functions(df)
 
     return {**variables, **functions_dict}
 
