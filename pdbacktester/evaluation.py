@@ -2,8 +2,7 @@ import pandas as pd
 
 import pdbacktester.constants
 from pdbacktester.errors import EvaluationError
-from pdbacktester.function_registry import FUNCTION_REGISTRY
-from pdbacktester.function_registry import FUNCTION_REGISTRY_WITH_INJECTIONS
+from pdbacktester.function_registry import get_regular_functions, get_functions_with_injections
 from pdbacktester.series_container import SeriesContainer
 
 
@@ -23,16 +22,9 @@ def get_variables(df: pd.DataFrame) -> dict:
 
 
 def get_functions(df: pd.DataFrame) -> dict:
-    functions_dict = {}
-    for key, value in FUNCTION_REGISTRY.items():
-        functions_dict[key] = lambda *args, value=value, **kwargs: value(
-            *args, **kwargs
-        )
-    for key, value in FUNCTION_REGISTRY_WITH_INJECTIONS.items():
-        functions_dict[key] = lambda *args, value=value, **kwargs: value(
-            df, *args, **kwargs
-        )
-    return functions_dict
+    regular_functions = get_regular_functions()
+    functions_with_injections = get_functions_with_injections(df)
+    return {**regular_functions, **functions_with_injections}
 
 
 def get_locals(df: pd.DataFrame):

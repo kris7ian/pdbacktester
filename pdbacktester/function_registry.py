@@ -74,3 +74,15 @@ def transform_kwargs(kwargs):
         else:
             modified_kwargs[key] = value
     return modified_kwargs
+
+
+def get_regular_functions():
+    return {key: lambda *args, value=value, **kwargs: value(
+            *args, **kwargs
+        ) for key, value in FUNCTION_REGISTRY.items()}
+
+
+def get_functions_with_injections(df):
+    return {key: lambda *args, value=value, df=df, **kwargs: value(
+            df, *args, **kwargs
+        ) for key, value in FUNCTION_REGISTRY_WITH_INJECTIONS.items()}
