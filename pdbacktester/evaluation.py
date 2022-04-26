@@ -2,7 +2,8 @@ import pandas as pd
 
 import pdbacktester.constants
 from pdbacktester.errors import EvaluationError
-from pdbacktester.function_registry import get_regular_functions, get_functions_with_injections
+from pdbacktester.function_registry import get_functions_with_injections
+from pdbacktester.function_registry import get_regular_functions
 from pdbacktester.series_container import SeriesContainer
 
 

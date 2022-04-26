@@ -1,8 +1,9 @@
 import pandas as pd
 import pytest
 
-from pdbacktester.function_registry import FUNCTION_REGISTRY, get_functions_with_injections
+from pdbacktester.function_registry import FUNCTION_REGISTRY
 from pdbacktester.function_registry import FUNCTION_REGISTRY_WITH_INJECTIONS
+from pdbacktester.function_registry import get_functions_with_injections
 from pdbacktester.function_registry import register
 from pdbacktester.function_registry import register_and_inject
 from pdbacktester.function_registry import register_function
@@ -62,7 +63,6 @@ def test_functions_in_inject_registry_are_not_cached():
 
 
 def test_functions_in_registry_are_not_cached(series_container):
-
     @register
     def my_func(sc):
         return sc
