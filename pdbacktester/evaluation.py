@@ -1,6 +1,8 @@
 import pandas as pd
 
 import pdbacktester.constants
+import pdbacktester.variables
+from pdbacktester.constants import Columns
 from pdbacktester.errors import EvaluationError
 from pdbacktester.function_registry import get_functions_with_injections
 from pdbacktester.function_registry import get_regular_functions
@@ -9,16 +11,16 @@ from pdbacktester.series_container import SeriesContainer
 
 def get_variables(df: pd.DataFrame) -> dict:
     return dict(
-        open=SeriesContainer(df["open"]),
-        high=SeriesContainer(df["high"]),
-        low=SeriesContainer(df["low"]),
-        close=SeriesContainer(df["close"]),
-        weekday=SeriesContainer(lambda: pdbacktester.constants.weekday(df)),
-        month=SeriesContainer(lambda: pdbacktester.constants.month(df)),
-        year=SeriesContainer(lambda: pdbacktester.constants.year(df)),
-        day=SeriesContainer(lambda: pdbacktester.constants.day(df)),
-        today=SeriesContainer(lambda: pdbacktester.constants.today(df)),
-        gap=SeriesContainer(lambda: pdbacktester.constants.gap(df)),
+        open=SeriesContainer(df[Columns.OPEN]),
+        high=SeriesContainer(df[Columns.HIGH]),
+        low=SeriesContainer(df[Columns.LOW]),
+        close=SeriesContainer(df[Columns.CLOSE]),
+        weekday=SeriesContainer(lambda: pdbacktester.variables.weekday(df)),
+        month=SeriesContainer(lambda: pdbacktester.variables.month(df)),
+        year=SeriesContainer(lambda: pdbacktester.variables.year(df)),
+        day=SeriesContainer(lambda: pdbacktester.variables.day(df)),
+        today=SeriesContainer(lambda: pdbacktester.variables.today(df)),
+        gap=SeriesContainer(lambda: pdbacktester.variables.gap(df)),
     )
 
 

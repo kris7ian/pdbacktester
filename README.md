@@ -30,4 +30,3 @@ close > open
 backtester = Backtester(df, code)
 results = backtester.run()
 ```
-
