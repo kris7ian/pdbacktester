@@ -30,7 +30,7 @@ def get_functions(df: pd.DataFrame) -> dict:
     return {**regular_functions, **functions_with_injections}
 
 
-def get_locals(df: pd.DataFrame):
+def get_locals(df: pd.DataFrame) -> pd.Series:
     """
     Collects all variables that should be available at runtime
     for the `eval` call in `evaluate_line`.
@@ -41,26 +41,26 @@ def get_locals(df: pd.DataFrame):
     return {**variables, **functions_dict}
 
 
-def assert_has_comparator(line: str):
+def assert_has_comparator(line: str) -> None:
     comparators = [">", "<", ">=", "<=", "=="]
     has_comparator = any([cmp in line for cmp in comparators])
     if not has_comparator:
         raise SyntaxError("Condition needs a comparator.")
 
 
-def evaluate_line(df: pd.DataFrame, line: str):
+def evaluate_line(df: pd.DataFrame, line: str) -> pd.Series:
     assert_has_comparator(line)
     locals_dict = get_locals(df)
     return eval(line, {"__builtins__": None}, locals_dict)
 
 
-def get_signals(df: pd.DataFrame, code_string: str):
+def get_signals(df: pd.DataFrame, code_string: str) -> pd.Series:
     conditions = []
     lines = [s.strip() for s in code_string.strip().splitlines()]
     for i, line in enumerate(lines):
         try:
             condition = evaluate_line(df, line)
-        except Exception as e:
+        except Exception as _:
             # Examples: SyntaxError
             raise EvaluationError(f"There was an error on line {i}: {line}")
         conditions.append(condition)
